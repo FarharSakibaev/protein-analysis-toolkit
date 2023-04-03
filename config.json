@@ -1,0 +1,21 @@
+{
+  "percentage_lower_limit": 2,
+
+  "autolysis_lower_limit_size": 1,
+  "autolysis_upper_limit_size": 3.5,
+
+  "native_lower_limit_size": 3.5,
+  "native_upper_limit_size": 7,
+
+  "small_aggregates_lower_limit_size": 10,
+  "small_aggregates_upper_limit_size": 35,
+
+  "large_aggregates_lower_limit_size": 35,
+  "large_aggregates_upper_limit_size": 200,
+
+  "exclusion_lower_limit": 7,
+  "exclusion_upper_limit": 10,
+
+  "y_label": "Temperature",
+  "row_dataset_number": 2
+}
