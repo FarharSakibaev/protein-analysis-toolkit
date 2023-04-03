@@ -1,10 +1,10 @@
 import pandas as pd
 
 from config import PROJECT_PATH, PERCENTAGE_LOWER_LIMIT, Y_LABEL, logger, ROW_DATASET_NUMBER
-from .dimension import Dimension
+from .measurement import Measurement
 
 
-class DimensionFactory:
+class MeasurementFactory:
 
     def __init__(self, file_path: str) -> None:
         self._set_data_frame(file_path)
@@ -37,8 +37,8 @@ class DimensionFactory:
 
         return None
 
-    def get_dimension_list(self) -> list[Dimension]:
-        dimensions_list = []
+    def get_measurement_list(self) -> list[Measurement]:
+        measurements_list = []
         data = []
 
         prev_y_label = None
@@ -46,7 +46,7 @@ class DimensionFactory:
         for row_index, y_label in enumerate(self.data_frame[Y_LABEL]):
 
             if prev_y_label != y_label and prev_y_label is not None:
-                dimensions_list.append(Dimension(data, prev_y_label))
+                measurements_list.append(Measurement(data, prev_y_label))
                 data = []
 
             for dataset_index in range(ROW_DATASET_NUMBER):
@@ -57,7 +57,7 @@ class DimensionFactory:
 
                 prev_y_label = y_label
 
-        if not dimensions_list:
-            logger.log_empty_dimensions_list()
+        if not measurements_list:
+            logger.log_empty_measurements_list()
 
-        return dimensions_list
+        return measurements_list

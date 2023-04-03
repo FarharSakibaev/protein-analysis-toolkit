@@ -1,10 +1,10 @@
 from config import AUTOLYSIS_UPPER_LIMIT_SIZE, AUTOLYSIS_LOWER_LIMIT_SIZE, NATIVE_LOWER_LIMIT_SIZE, \
     NATIVE_UPPER_LIMIT_SIZE, SMALL_AGGREGATES_LOWER_LIMIT_SIZE, SMALL_AGGREGATES_UPPER_LIMIT_SIZE, \
-    LARGE_AGGREGATES_LOWER_LIMIT_SIZE, LARGE_AGGREGATES_UPPER_LIMIT_SIZE, EXCLUSION_LOWER_LIMIT, EXCLUSION_UPPER_LIMIT, \
-    logger
+    LARGE_AGGREGATES_LOWER_LIMIT_SIZE, LARGE_AGGREGATES_UPPER_LIMIT_SIZE, EXCLUSION_LOWER_LIMIT, \
+    EXCLUSION_UPPER_LIMIT, logger
 
 
-class Dimension:
+class Measurement:
 
     def __init__(self, data: list, y_label_value) -> None:
         self.y_label_value = y_label_value
@@ -82,4 +82,3 @@ class Dimension:
 
     def get_large_aggregates(self):
         return self.calculations['large_aggregates']
-
