@@ -22,7 +22,12 @@ class Dimension:
             'large_aggregates': [],
         }
 
-        self.amount = 0
+        self.amount = {
+            'autolysis': 0,
+            'native': 0,
+            'small_aggregates': 0,
+            'large_aggregates': 0,
+        }
 
         self.calculations = {
             'autolysis': 0.0,
@@ -37,19 +42,19 @@ class Dimension:
     def _sort_percentage(self, data: list[dict]):
         for values in data:
             if AUTOLYSIS_LOWER_LIMIT_SIZE < values['diameter'] <= AUTOLYSIS_UPPER_LIMIT_SIZE:
-                self.amount += 1
+                self.amount['autolysis'] += 1
                 self.percentages['autolysis'].append(values['percentage'])
 
             elif NATIVE_LOWER_LIMIT_SIZE < values['diameter'] <= NATIVE_UPPER_LIMIT_SIZE:
-                self.amount += 1
+                self.amount['native'] += 1
                 self.percentages['native'].append(values['percentage'])
 
             elif SMALL_AGGREGATES_LOWER_LIMIT_SIZE < values['diameter'] <= SMALL_AGGREGATES_UPPER_LIMIT_SIZE:
-                self.amount += 1
+                self.amount['small_aggregates'] += 1
                 self.percentages['small_aggregates'].append(values['percentage'])
 
             elif LARGE_AGGREGATES_LOWER_LIMIT_SIZE < values['diameter'] <= LARGE_AGGREGATES_UPPER_LIMIT_SIZE:
-                self.amount += 1
+                self.amount['large_aggregates'] += 1
                 self.percentages['large_aggregates'].append(values['percentage'])
 
             elif EXCLUSION_LOWER_LIMIT < values['diameter'] <= EXCLUSION_UPPER_LIMIT:
@@ -57,8 +62,8 @@ class Dimension:
 
     def _calculate(self) -> None:
         for key in self.percentages:
-            if self.amount != 0:
-                percentage = round(sum(self.percentages[key]) / self.amount, 1)
+            if self.amount[key] != 0:
+                percentage = round(sum(self.percentages[key]) / self.amount[key], 1)
                 self.calculations[key] = percentage
             else:
                 logger.log_empty_y_label_values(self.y_label_value)
