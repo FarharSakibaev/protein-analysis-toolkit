@@ -14,7 +14,7 @@ class Logger:
     def __init__(self) -> None:
         self.logs = {}
         self.messages = {
-            'get_dimension_list': 'Dimensions added for y labels',
+            'get_measurement_list': 'Measurements added for y labels',
             '_sort_percentage': 'Excluded values',
             '_calculate': 'No percentage found for y labels'
         }
@@ -31,15 +31,15 @@ class Logger:
 
         return wrapper
 
-    def log_new_dimension(self, y_label):
-        if 'get_dimension_list' not in self.logs:
-            self.logs['get_dimension_list'] = []
+    def log_new_measurement(self, y_label):
+        if 'get_measurement_list' not in self.logs:
+            self.logs['get_measurement_list'] = []
 
-        self.logs['get_dimension_list'].append(y_label)
+        self.logs['get_measurement_list'].append(y_label)
 
     @staticmethod
-    def log_empty_dimensions_list():
-        logger.info('No dimensions found')
+    def log_empty_measurements_list():
+        logger.info('No measurements found')
 
     def log_exclusion(self, data):
         if '_sort_percentage' not in self.logs:

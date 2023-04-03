@@ -1,12 +1,12 @@
 import csv
 
 from config import OUTPUT_PATH, Y_LABEL
-from dimension.dimension import Dimension
+from measurement.measurement import Measurement
 
 
 class ReportBuilder:
 
-    def __init__(self, data_sheet_list: list[Dimension], file_name: str = 'out.csv') -> None:
+    def __init__(self, data_sheet_list: list[Measurement], file_name: str = 'out.csv') -> None:
         self.data_sheet_list = data_sheet_list
         self.csv_path = OUTPUT_PATH + '/' + file_name
 
