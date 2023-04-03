@@ -1,7 +1,7 @@
 from config import AUTOLYSIS_UPPER_LIMIT_SIZE, AUTOLYSIS_LOWER_LIMIT_SIZE, NATIVE_LOWER_LIMIT_SIZE, \
     NATIVE_UPPER_LIMIT_SIZE, SMALL_AGGREGATES_LOWER_LIMIT_SIZE, SMALL_AGGREGATES_UPPER_LIMIT_SIZE, \
     LARGE_AGGREGATES_LOWER_LIMIT_SIZE, LARGE_AGGREGATES_UPPER_LIMIT_SIZE, EXCLUSION_LOWER_LIMIT, \
-    EXCLUSION_UPPER_LIMIT, logger
+    EXCLUSION_UPPER_LIMIT, logger, DECIMAL_PLACES
 
 
 class Measurement:
@@ -22,12 +22,7 @@ class Measurement:
             'large_aggregates': [],
         }
 
-        self.amount = {
-            'autolysis': 0,
-            'native': 0,
-            'small_aggregates': 0,
-            'large_aggregates': 0,
-        }
+        self.row_count = 0
 
         self.calculations = {
             'autolysis': 0.0,
@@ -38,23 +33,26 @@ class Measurement:
 
         self._sort_percentage(data)
         self._calculate()
+        self._normalize()
 
     def _sort_percentage(self, data: list[dict]):
+        prev_row_index = None
+
         for values in data:
+            if values['row'] != prev_row_index:
+                self.row_count += 1
+                prev_row_index = values['row']
+
             if AUTOLYSIS_LOWER_LIMIT_SIZE < values['diameter'] <= AUTOLYSIS_UPPER_LIMIT_SIZE:
-                self.amount['autolysis'] += 1
                 self.percentages['autolysis'].append(values['percentage'])
 
             elif NATIVE_LOWER_LIMIT_SIZE < values['diameter'] <= NATIVE_UPPER_LIMIT_SIZE:
-                self.amount['native'] += 1
                 self.percentages['native'].append(values['percentage'])
 
             elif SMALL_AGGREGATES_LOWER_LIMIT_SIZE < values['diameter'] <= SMALL_AGGREGATES_UPPER_LIMIT_SIZE:
-                self.amount['small_aggregates'] += 1
                 self.percentages['small_aggregates'].append(values['percentage'])
 
             elif LARGE_AGGREGATES_LOWER_LIMIT_SIZE < values['diameter'] <= LARGE_AGGREGATES_UPPER_LIMIT_SIZE:
-                self.amount['large_aggregates'] += 1
                 self.percentages['large_aggregates'].append(values['percentage'])
 
             elif EXCLUSION_LOWER_LIMIT < values['diameter'] <= EXCLUSION_UPPER_LIMIT:
@@ -62,11 +60,25 @@ class Measurement:
 
     def _calculate(self) -> None:
         for key in self.percentages:
-            if self.amount[key] != 0:
-                percentage = round(sum(self.percentages[key]) / self.amount[key], 1)
+            if self.row_count != 0:
+                percentage = round(sum(self.percentages[key]) / self.row_count, DECIMAL_PLACES)
                 self.calculations[key] = percentage
             else:
                 logger.log_empty_y_label_values(self.y_label_value)
+
+    def _normalize(self) -> None:
+        calculations = list(self.calculations.values())
+        summ = sum(calculations)
+
+        if summ < 100:
+            delta = 100 - summ
+            max_value = max(calculations)
+
+            for key, value in self.calculations.items():
+                if value == max_value:
+                    self.calculations[key] = max_value + delta
+        elif summ > 100:
+            raise RuntimeError('Summ percentage cannot exceed 100')
 
     def get_y_label_value(self):
         return self.y_label_value

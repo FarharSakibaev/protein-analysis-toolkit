@@ -32,3 +32,5 @@ with open(f'{PROJECT_PATH}/config.json') as config_file:
     Y_LABEL = config_data['y_label']
     ROW_DATASET_NUMBER = config_data['row_dataset_number']
 
+    DECIMAL_PLACES = config_data['decimal_places']
+

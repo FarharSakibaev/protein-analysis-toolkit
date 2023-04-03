@@ -32,7 +32,8 @@ class MeasurementFactory:
             diameter = self.data_frame[diameter_column_name][row_index]
             return {
                 'percentage': percentage,
-                'diameter': diameter
+                'diameter': diameter,
+                'row': row_index
             }
 
         return None
