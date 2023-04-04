@@ -10,11 +10,6 @@ class Measurement:
         self.y_label_value = y_label_value
         self.groups_count = 0
 
-        self.autolysis = 0
-        self.native = 0
-        self.small_aggregates = 0
-        self.large_aggregates = 0
-
         self.percentages = {
             'autolysis': [],
             'native': [],
