@@ -60,3 +60,7 @@ class Logger:
             self.logs['_calculate'] = []
 
         self.logs['_calculate'].append(data)
+
+    @staticmethod
+    def log_config(config):
+        logger.debug('Current config: ' + str(config))

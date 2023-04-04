@@ -11,6 +11,7 @@ OUTPUT_PATH = f'{PROJECT_PATH}/output'
 
 with open(f'{PROJECT_PATH}/config.json') as config_file:
     config_data = json.load(config_file)
+    logger.log_config(config_data)
 
     PERCENTAGE_LOWER_LIMIT = config_data['percentage_lower_limit']
 
