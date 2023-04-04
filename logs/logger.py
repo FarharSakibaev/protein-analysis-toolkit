@@ -1,6 +1,10 @@
+import sys
+
 from loguru import logger
 
-logger.add(sink='logs.log')
+logger.remove(handler_id=None)
+logger.add(sink='logs.log', level='DEBUG')
+logger.add(sink=sys.stdout, level='INFO')
 
 
 class Logger:
@@ -40,6 +44,10 @@ class Logger:
     @staticmethod
     def log_empty_measurements_list():
         logger.info('No measurements found')
+
+    @staticmethod
+    def log_low_percentage(percentage):
+        logger.debug('Low percentage: ' + str(percentage))
 
     def log_exclusion(self, data):
         if '_sort_percentage' not in self.logs:

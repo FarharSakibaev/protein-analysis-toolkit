@@ -36,6 +36,8 @@ class MeasurementFactory:
                 'diameter': diameter,
                 'row': row_index
             }
+        else:
+            logger.log_low_percentage(percentage)
 
         return None
 
