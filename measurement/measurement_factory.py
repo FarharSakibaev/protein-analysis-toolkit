@@ -7,6 +7,7 @@ from .measurement import Measurement
 class MeasurementFactory:
 
     def __init__(self, file_path: str) -> None:
+        # TODO: Implement data provider to add possibility to get data from REST
         self._set_data_frame(file_path)
 
     def _set_data_frame(self, file_path: str) -> None:
@@ -38,6 +39,7 @@ class MeasurementFactory:
 
         return None
 
+    @logger.release_logs
     def get_measurement_list(self) -> list[Measurement]:
         measurements_list = []
         data = []
@@ -48,6 +50,7 @@ class MeasurementFactory:
 
             if prev_y_label != y_label and prev_y_label is not None:
                 measurements_list.append(Measurement(data, prev_y_label))
+                logger.log_new_measurement(y_label)
                 data = []
 
             for dataset_index in range(ROW_DATASET_NUMBER):
