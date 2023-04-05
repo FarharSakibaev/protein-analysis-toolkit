@@ -19,8 +19,9 @@ def setup():
 
     for file_path in files_to_create:
         file_path = f'{PROJECT_PATH}/{file_path}'
-        with open(file_path, 'w') as file:
-            file.write('')
+        if not os.path.exists(file_path):
+            with open(file_path, 'w') as file:
+                file.write('')
 
 
 if __name__ == '__main__':
