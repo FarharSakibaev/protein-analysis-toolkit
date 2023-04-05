@@ -34,7 +34,7 @@ def update() -> None:
 
     if version != latest_version or latest_version not in version:
         subprocess.run(["git", "checkout", "master"])
-        subprocess.run(["git", "fetch"])
+        subprocess.run(["git", "pull"])
 
         with open(file_path, 'w') as version_file:
             version_file.write(latest_version)
