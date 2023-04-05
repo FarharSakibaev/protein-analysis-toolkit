@@ -1,9 +1,13 @@
 import os
 
-from config import PROJECT_PATH
+from config import PROJECT_PATH, FETCH_UPDATES
+from update import update
 
 
 def setup():
+    if FETCH_UPDATES:
+        update()
+
     dirs_to_create = ['input', 'output']
     files_to_create = ['version.txt']
 

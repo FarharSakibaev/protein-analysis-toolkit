@@ -19,5 +19,6 @@
   "y_label": "Temperature",
   "row_dataset_number": 2,
 
-  "decimal_places": 1
+  "decimal_places": 1,
+  "fetch_updates": true
 }

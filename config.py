@@ -34,4 +34,5 @@ with open(f'{PROJECT_PATH}/config.json') as config_file:
     ROW_DATASET_NUMBER = config_data['row_dataset_number']
 
     DECIMAL_PLACES = config_data['decimal_places']
+    FETCH_UPDATES = config_data['fetch_updates']
 

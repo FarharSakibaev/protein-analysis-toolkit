@@ -38,7 +38,7 @@ def update() -> None:
 
         with open(file_path, 'w') as version_file:
             version_file.write(latest_version)
-        print('Project updated')
+        exit('Project updated, please run the application again')
     else:
         print('Nothing to update')
 
