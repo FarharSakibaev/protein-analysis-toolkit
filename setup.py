@@ -5,6 +5,7 @@ from update import update
 
 
 def setup():
+
     if FETCH_UPDATES:
         update()
 
